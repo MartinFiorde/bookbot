@@ -1,7 +1,11 @@
 def main():
     path = 'books/frankenstein.txt'
-    print(get_all_content(path))
+
+    print(get_head_and_tail(get_all_content(path)))
+
     print(f"Words count: {count_words(path)}")
+
+    print(count_characters(path))
 
 
 def get_all_content(path):
@@ -10,13 +14,32 @@ def get_all_content(path):
             content = file.read()
             #file.seek(0) # put pointer back to start of file. usefull if you need to reuse the same file in the "with open()" block
         return content
-    
+
     except FileNotFoundError:
         print(f"El archivo en la dirección {path} no fue encontrado.")
         return ""
     except Exception as e:
         print(f"Ocurrió un error: {e}")
         return ""
+
+
+def get_head_and_tail(text):
+    lines = text.splitlines(keepends=True)
+    head = lines[:10]
+    tail = lines[-10:]
+    result = ""
+    line_index = 0
+    print("total lines: " + str(len(lines)))
+    for line in head:
+        result += f"{line_index}.{line}"
+        line_index += 1
+
+    line_index = len(lines) - 10
+    for line in tail:
+        result += f"{line_index}.{line}"
+        line_index += 1
+
+    return result
 
 
 def count_words(path):
