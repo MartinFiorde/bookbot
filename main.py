@@ -1,11 +1,11 @@
 def main():
     path = 'books/frankenstein.txt'
 
-    print(get_head_and_tail(get_all_content(path)))
+    # print(get_head_and_tail(get_all_content(path)))
+    # print(f"Words count: {count_words(path)}")
+    # print(count_characters(path))
 
-    print(f"Words count: {count_words(path)}")
-
-    print(count_characters(path))
+    print(generate_report(path))
 
 
 def get_all_content(path):
@@ -29,7 +29,6 @@ def get_head_and_tail(text):
     tail = lines[-10:]
     result = ""
     line_index = 0
-    print("total lines: " + str(len(lines)))
     for line in head:
         result += f"{line_index}.{line}"
         line_index += 1
@@ -63,7 +62,7 @@ def count_characters(path):
         char_dic_counts = {}
         with open(path, 'r', encoding='utf-8') as file:
             for char in file.read():
-                if 'a' <= char <= 'z':
+                if str(char).isalpha():
                     if char.lower() in char_dic_counts:
                         char_dic_counts[char.lower()] += 1
                     else:
@@ -77,6 +76,20 @@ def count_characters(path):
     except Exception as e:
         print(f"Ocurrió un error: {e}")
         return {}
+    
+
+def generate_report(path):
+    result = ""
+    result += f"--- Begin report of {path} ---\n"
+
+    result += f"{count_words(path)} words found in the document\n\n"
+
+    dic_sorted_by_value = {k: v for k, v in sorted(count_characters(path).items(), key=lambda item: item[1], reverse=True)}
+    for key in dic_sorted_by_value:
+        result += f"The '{key}' character was found {dic_sorted_by_value[key]} times\n"
+
+    result += f"--- End report ---"
+    return result
 
 
 if __name__ == '__main__':
