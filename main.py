@@ -62,7 +62,7 @@ def generate_report(path):
         )
     }
     for key in dic_sorted_by_value:
-        result += f"The '{key}' character was found {dic_sorted_by_value[key]} times\n"
+        result += f"{key}: {dic_sorted_by_value[key]} - The '{key}' character was found {dic_sorted_by_value[key]} times\n"
 
     result += f"--- End report ---"
     return result
